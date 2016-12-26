@@ -281,17 +281,15 @@ public class GPAcalculator extends javax.swing.JFrame {
                 case "U":
                 case "P":
                     omitCredits += credit;
-                    break;
                 default:
-                    qualityPoints += grade * credit;
                     break;
             }
             qualityPoints += grade*credit;
             totalCredits += credit;
         }
         
-        if (totalCredits != 0) {
-            double finalGrade = qualityPoints/totalCredits;
+        if (totalCredits-omitCredits > 0) {
+            double finalGrade = qualityPoints/(totalCredits-omitCredits);
         
             java.text.DecimalFormat df = new java.text.DecimalFormat("##.00");
             df.setRoundingMode(RoundingMode.DOWN);
