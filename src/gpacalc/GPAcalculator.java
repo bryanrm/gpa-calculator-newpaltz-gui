@@ -112,7 +112,7 @@ public class GPAcalculator extends javax.swing.JFrame {
             }
         });
 
-        gradeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F" }));
+        gradeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "S", "U", "P" }));
 
         creditBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4", "3", "2", "1" }));
 
@@ -269,12 +269,23 @@ public class GPAcalculator extends javax.swing.JFrame {
 
     private void calculateGPAButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateGPAButtonActionPerformed
         // TODO add your handling code here:
-        double qualityPoints = 0, totalCredits = 0;
+        double qualityPoints = 0, totalCredits = 0, omitCredits = 0;
         
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         for (int count = 0; count < model.getRowCount(); count++) {
-            double grade = getGradeData(model.getValueAt(count, 1).toString());
+            String letter = model.getValueAt(count, 1).toString();
+            double grade = getGradeData(letter);
             int credit = Integer.valueOf(model.getValueAt(count, 2).toString());
+            switch (letter) {
+                case "S":
+                case "U":
+                case "P":
+                    omitCredits += credit;
+                    break;
+                default:
+                    qualityPoints += grade * credit;
+                    break;
+            }
             qualityPoints += grade*credit;
             totalCredits += credit;
         }
@@ -308,7 +319,6 @@ public class GPAcalculator extends javax.swing.JFrame {
             case "D+": return 1.33;
             case "D": return 1.0;
             case "D-": return 0.67;
-            case "F": return 0.0;
             default: return 0.0;
         }
     }
