@@ -162,7 +162,7 @@ public class GPAcalculator extends javax.swing.JFrame {
             }
         });
 
-        openButton.setText("Open File");
+        openButton.setText("Load File");
         openButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openButtonActionPerformed(evt);
